@@ -33,8 +33,8 @@ func NewRouter(middlewares ...Middleware) *Router {
 func (r *Router) RegistrationHandler(handlers ...handler) {
 	for _, h := range handlers {
 		fn := h.fn
-		for _, m := range r.middlewares {
-			fn = m(fn)
+		for i := len(r.middlewares) - 1; i >= 0; i-- {
+			fn = r.middlewares[i](fn)
 		}
 		r.routes[h.path] = fn
 	}
